@@ -1,0 +1,92 @@
+{
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "rateLimit": {
+        "maxAttempts": 10,
+        "windowMs": 60000,
+        "lockoutMs": 300000
+      }
+    },
+    "trustedProxies": ["172.16.0.0/12", "10.0.0.0/8"]
+  },
+  "agents": {
+    "list": [{"id": "main", "name": "main"}],
+    "defaults": {
+      "workspace": "/home/node/.openclaw/workspace",
+      "model": {
+        "primary": "DeepSeek V3.2"
+      },
+      "models": {
+        "openrouter/deepseek/deepseek-chat-v3-0324": {"alias": "DeepSeek V3.2"},
+        "openrouter/google/gemini-2.5-flash": {"alias": "Gemini 2.5 Flash"},
+        "openrouter/anthropic/claude-sonnet-4.6": {"alias": "Claude Sonnet 4.6"}
+      },
+      "thinkingDefault": "low",
+      "compaction": {
+        "mode": "safeguard"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "api": "openai-completions",
+        "auth": "api-key",
+        "models": [
+          {
+            "id": "deepseek/deepseek-chat-v3-0324",
+            "name": "DeepSeek V3.2",
+            "reasoning": true,
+            "input": ["text"],
+            "maxTokens": 8192,
+            "contextWindow": 128000
+          },
+          {
+            "id": "google/gemini-2.5-flash",
+            "name": "Gemini 2.5 Flash",
+            "reasoning": true,
+            "input": ["text", "image"],
+            "maxTokens": 8192,
+            "contextWindow": 1048576
+          },
+          {
+            "id": "anthropic/claude-sonnet-4.6",
+            "name": "Claude Sonnet 4.6",
+            "reasoning": true,
+            "input": ["text", "image"],
+            "maxTokens": 8192,
+            "contextWindow": 200000
+          }
+        ]
+      }
+    }
+  },
+  "tools": {
+    "profile": "full",
+    "elevated": {
+      "enabled": true,
+      "allowFrom": {
+        "webchat": ["*"]
+      }
+    }
+  },
+  "browser": {
+    "headless": true,
+    "noSandbox": true,
+    "defaultProfile": "openclaw"
+  },
+  "commands": {
+    "bash": true,
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true
+  },
+  "update": {
+    "channel": "stable",
+    "checkOnStart": false
+  }
+}
