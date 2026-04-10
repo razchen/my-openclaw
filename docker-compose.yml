@@ -28,7 +28,7 @@ services:
     command:
       [
         "node", "dist/index.js", "gateway",
-        "--bind", "0.0.0.0",
+        "--bind", "lan",
         "--port", "18789",
       ]
     healthcheck:
